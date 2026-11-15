@@ -44,7 +44,7 @@ Development history, problems encountered, solutions applied, and lessons learne
    - LEDs L1-L7 not connected, caused warnings
    - **Solution**: Commented out unused LED constraints
 
-**Result**: ✅ All files compile successfully
+**Result**: [PASS] All files compile successfully
 
 ---
 
@@ -54,9 +54,9 @@ Development history, problems encountered, solutions applied, and lessons learne
 **Problem**: VGA monitor showed **no signal** (black screen)
 
 **Initial Diagnosis**:
-- Compiled without errors ✓
-- Flashed to FPGA successfully ✓
-- VGA cable connected ✓
+- Compiled without errors [PASS]
+- Flashed to FPGA successfully [PASS]
+- VGA cable connected [PASS]
 - But monitor said "No Signal"
 
 **Root Cause Analysis**:
@@ -89,7 +89,7 @@ Problem: 20 MHz ÷ 2 = 10 MHz (wrong for VGA)
 
 Solution: Use DCM_SP to multiply frequency:
 ```vhdl
-20 MHz × (5/2) = 50 MHz → ÷2 → 25 MHz ✓
+20 MHz × (5/2) = 50 MHz → ÷2 → 25 MHz
 ```
 
 **Critical Setting**: `STARTUP_WAIT => TRUE`
@@ -116,7 +116,7 @@ Created `vga_test_full.vhd` with color bars:
 - Green bar: pixels 213-425
 - Blue bar: pixels 426-639
 
-**Test Result**: ✅ Color bars displayed correctly!
+**Test Result**: [PASS] Color bars displayed correctly.
 
 This confirmed:
 - Clock generation works (DCM locked, LED L0 ON)
@@ -157,7 +157,7 @@ Temporarily replaced keyboard handler with pre-filled grid:
 - Row 3: "TE___" (partial, no color)
 - Row 4: "DEBUG" (mixed colors)
 
-**Result**: ✅ Letters and colors display correctly!
+**Result**: [PASS] Letters and colors display correctly.
 
 ---
 
@@ -188,7 +188,7 @@ Temporarily replaced keyboard handler with pre-filled grid:
 -- Add DCM lock indicator to LED
 led_locked <= dcm_locked;  -- Connect to pin P82 (L0)
 ```
-- LED ON: DCM working ✓
+- LED ON: DCM working [OK]
 - LED OFF: DCM problem, check settings
 
 ---
@@ -273,13 +273,13 @@ debug_leds <= scancode(7 downto 0);
 ## VHDL Common Pitfalls
 
 ### 1. Output Ports Are Write-Only
-❌ **Wrong**:
+**[FAIL] Wrong**:
 ```vhdl
 signal_out <= some_logic;
 if signal_out = '1' then  -- ERROR: Can't read output port!
 ```
 
-✅ **Correct**:
+**[PASS] Correct**:
 ```vhdl
 signal signal_internal : std_logic;
 signal_internal <= some_logic;
@@ -288,7 +288,7 @@ if signal_internal = '1' then   -- Read from internal signal
 ```
 
 ### 2. Sensitivity List Must Be Complete
-❌ **Wrong** (causes simulation/synthesis mismatch):
+**[FAIL] Wrong** (causes simulation/synthesis mismatch):
 ```vhdl
 process(clk)  -- Missing reset and other inputs
 begin
@@ -300,7 +300,7 @@ begin
 end process;
 ```
 
-✅ **Correct**:
+**[PASS] Correct**:
 ```vhdl
 process(clk, rst)  -- Include all signals read in process
 ```
@@ -313,13 +313,13 @@ Use **signals** for values that persist between clock cycles.
 Use **variables** for temporary calculations within a process.
 
 ### 4. Indexed Arrays Must Have Consistent Types
-❌ **Wrong**:
+**[FAIL] Wrong**:
 ```vhdl
 signal index : integer;
 data <= array(index);  -- May not synthesize!
 ```
 
-✅ **Correct**:
+**[PASS] Correct**:
 ```vhdl
 signal index : integer;
 data <= array(to_integer(unsigned(index_vector)));
@@ -540,6 +540,6 @@ Unlike software:
 
 ---
 
-**Status**: ✅ VGA working | ✅ Display renderer working | ⏳ Full system integration pending
+**Summary**: Dual-FPGA VHDL architecture, DCM VGA renderer, and serial communication testbench (`serial_communication_tb.vhd`) documented.
 
 **Last Updated**: November 2025

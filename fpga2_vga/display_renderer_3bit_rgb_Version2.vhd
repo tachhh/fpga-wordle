@@ -48,11 +48,11 @@ architecture Behavioral of display_renderer is
     constant CHAR_SCALE   : integer := 5;
     
     -- สีต่างๆ (3 bits: R G B)
-    constant COLOR_BLACK      : std_logic_vector(2 downto 0) := "000";  -- ⚫ ดำ
-    constant COLOR_WHITE      : std_logic_vector(2 downto 0) := "111";  -- ⚪ ขาว
-    constant COLOR_GREEN      : std_logic_vector(2 downto 0) := "010";  -- 🟢 เขียว
-    constant COLOR_YELLOW     : std_logic_vector(2 downto 0) := "110";  -- 🟡 เหลือง
-    constant COLOR_MAGENTA    : std_logic_vector(2 downto 0) := "101";  -- 🟣 ม่วง (แทนเทา)
+    constant COLOR_BLACK      : std_logic_vector(2 downto 0) := "000";  -- สีดำ
+    constant COLOR_WHITE      : std_logic_vector(2 downto 0) := "111";  -- สีขาว
+    constant COLOR_GREEN      : std_logic_vector(2 downto 0) := "010";  -- สีเขียว
+    constant COLOR_YELLOW     : std_logic_vector(2 downto 0) := "110";  -- สีเหลือง
+    constant COLOR_MAGENTA    : std_logic_vector(2 downto 0) := "101";  -- สีม่วง (แทนสีเทา)
     constant COLOR_DARK_GRAY  : std_logic_vector(2 downto 0) := "101";  -- ม่วง (empty cell)
     constant COLOR_BORDER     : std_logic_vector(2 downto 0) := "111";  -- ขาว
     
